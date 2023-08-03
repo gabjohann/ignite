@@ -1,7 +1,17 @@
 import http from 'http';
 
 const server = http.createServer((req, res) => {
-  return res.end('Hello, world!');
-})
+  const { method, url } = req;
 
-server.listen(3333)
+  if (method === 'GET' && url === '/users') {
+    return res.end('Listagem de usuários');
+  }
+
+  if (method === 'POST' && url === '/users') {
+    return res.end('Criação de usuários');
+  }
+
+  return res.end('Hello, world!');
+});
+
+server.listen(3333);
