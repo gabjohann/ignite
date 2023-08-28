@@ -9,13 +9,27 @@ import {
 } from './styles'
 import { Play } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+const newCycleFormValidationSchema = z.object({
+  task: z.string().min(1, 'Informe a tarefa'),
+  minutesAmount: z
+    .number()
+    .min(5, 'O ciclo precisar ser de no mínimo 5 minutos')
+    .max(60, 'O ciclo precisar ser de no máximo 60 minutos'),
+})
 
 export function Home() {
-  const { register, handleSubmit, watch } = useForm()
+  const { register, handleSubmit, watch, formState } = useForm({
+    resolver: zodResolver(newCycleFormValidationSchema),
+  })
 
   function handleCreateNewCycle(data: unknown) {
     console.log(data)
   }
+
+  console.log(formState.errors)
 
   const task = watch('task')
   const isSubmitDisabled = !task
