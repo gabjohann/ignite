@@ -19,6 +19,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body, input, textarea, button {
+    border: 0 none;
     font: 400 1rem Roboto, sans-serif;
   }
+
 `;
