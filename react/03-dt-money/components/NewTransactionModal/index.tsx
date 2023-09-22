@@ -1,6 +1,7 @@
 import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react';
 import * as Dialog from '@radix-ui/react-dialog';
-
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Overlay,
   Content,
@@ -8,8 +9,30 @@ import {
   TransactionType,
   TransactionTypeButton,
 } from './styles';
+import { useForm } from 'react-hook-form';
+
+const newTransactionFormSchema = z.object({
+  description: z.string(),
+  price: z.number(),
+  category: z.string(),
+  type: z.enum(['income', 'outcome']),
+});
+
+type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>;
 
 export function NewTransactionModal() {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<NewTransactionFormInputs>({
+    resolver: zodResolver(newTransactionFormSchema),
+  });
+
+  function handleCreateNewTransaction(data: NewTransactionFormInputs) {
+    console.log(data);
+  }
+
   return (
     <Dialog.Portal>
       <Overlay />
@@ -19,10 +42,25 @@ export function NewTransactionModal() {
           <X size={24} />
         </CloseButton>
 
-        <form action=''>
-          <input type='text' placeholder='Descrição' required />
-          <input type='number' placeholder='Preço' required />
-          <input type='text' placeholder='Categoria' required />
+        <form action='' onSubmit={handleSubmit(handleCreateNewTransaction)}>
+          <input
+            type='text'
+            placeholder='Descrição'
+            required
+            {...register('description')}
+          />
+          <input
+            type='number'
+            placeholder='Preço'
+            required
+            {...register('price', { valueAsNumber: true })}
+          />
+          <input
+            type='text'
+            placeholder='Categoria'
+            required
+            {...register('category')}
+          />
 
           <TransactionType>
             <TransactionTypeButton variant='income' value='income'>
@@ -36,7 +74,9 @@ export function NewTransactionModal() {
             </TransactionTypeButton>
           </TransactionType>
 
-          <button type='submit'>Cadastrar</button>
+          <button type='submit' disabled={isSubmitting}>
+            Cadastrar
+          </button>
         </form>
       </Content>
     </Dialog.Portal>
