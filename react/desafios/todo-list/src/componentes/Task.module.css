@@ -1,0 +1,75 @@
+.task {
+  width: 46rem;
+  margin: 0 auto;
+
+  background: var(--gray-500);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.taskContent {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.task input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 2px solid var(--blue-300);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+
+  transition: all 0.2s;
+}
+
+.task input:hover {
+  background-color: var(--blue-500);
+}
+
+.task input:checked {
+  background-color: var(--purple-500);
+  border-color: var(--purple-500);
+
+  transition: all 0.2s;
+}
+
+.task input:checked:hover {
+  background-color: var(--purple-300);
+  border-color: var(--purple-300);
+}
+
+.task p {
+  flex: 1;
+  color: var(--gray-100);
+}
+
+.taskContent input[type='checkbox']:checked + p {
+  text-decoration: line-through; /* Adicione qualquer estilo desejado para uma tarefa concluída */
+  color: gray; /* Exemplo de mudança de cor para tarefa concluída */
+}
+
+.task button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--gray-300);
+
+  transition: all 0.2s;
+}
+
+.task button:hover {
+  color: var(--red-500);
+  background: var(--gray-400);
+  padding: 0.375rem;
+  border-radius: 4px;
+}

@@ -1,0 +1,74 @@
+.input {
+  display: flex;
+  justify-content: center;
+  margin-top: -1.688rem;
+  gap: 0.5rem;
+}
+
+.input input {
+  background: var(--gray-500);
+  width: 40rem;
+  height: 3.375rem;
+  border: none;
+  border-radius: 8px;
+  text-indent: 1rem;
+
+  color: var(--gray-100);
+}
+
+.input button[type='submit'] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  background: var(--blue-500);
+  padding: 1rem;
+  color: var(--gray-100);
+  border: none;
+  border-radius: 8px;
+
+  font-weight: bold;
+
+  transtion: background-color 0.2s;
+}
+
+.input button[type='submit']:not(:disabled):hover {
+  background: var(--blue-300);
+}
+
+.input button[type='submit']:disabled {
+  opacity: 0.9;
+  cursor: not-allowed;
+}
+
+.tasksControl {
+  width: 46rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 0 auto;
+  margin-top: 4rem;
+}
+
+.createdTasks {
+  color: var(--blue-300);
+  font-weight: bold;
+}
+
+.tasksControl span {
+  background: var(--gray-400);
+  color: var(--gray-200);
+  font-size: 0.75rem;
+  font-weight: bold;
+
+  margin-left: 0.5rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+}
+
+.completedTasks {
+  color: var(--purple-300);
+  font-weight: bold;
+}
