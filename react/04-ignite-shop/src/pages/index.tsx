@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import Image from 'next/image';
 
 import { useKeenSlider } from 'keen-slider/react';
@@ -6,10 +6,6 @@ import { useKeenSlider } from 'keen-slider/react';
 import Stripe from 'stripe';
 import { stripe } from '../lib/stripe';
 import { HomeContainer, Product } from '../styles/pages/home';
-
-import camiseta1 from '../assets/camiseta_1.png';
-import camiseta2 from '../assets/camiseta_2.png';
-import camiseta3 from '../assets/camiseta_3.png';
 
 import 'keen-slider/keen-slider.min.css';
 
@@ -35,7 +31,13 @@ export default function Home({ products }: HomeProps) {
       {products.map((product) => {
         return (
           <Product key={product.id} className='keen-slider__slide'>
-            <Image src={product.imageUrl} alt='' width={520} height={480} />
+            <Image
+              src={product.imageUrl}
+              alt=''
+              placeholder='blur'
+              width={520}
+              height={480}
+            />
 
             <footer>
               <strong>{product.name}</strong>
@@ -48,7 +50,9 @@ export default function Home({ products }: HomeProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+// GetStaticProps (SSG) -> cria um cache dos dados
+// não se tem acesso ao contexto da requisição
+export const getStaticProps: GetStaticProps = async () => {
   const response = await stripe.products.list({
     expand: ['data.default_price'],
   });
@@ -64,10 +68,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
     };
   });
 
-  console.log(products);
   return {
     props: {
       products,
     },
+    revalidate: 60 * 60 * 2, // 2 hours
   };
 };
