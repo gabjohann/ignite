@@ -9,6 +9,7 @@ import {
   ProductDetails,
 } from '../../styles/pages/product';
 import { stripe } from '../../lib/stripe';
+import { useRouter } from 'next/router';
 
 interface ProductProps {
   product: {
@@ -20,6 +21,13 @@ interface ProductProps {
   };
 }
 export default function Product({ product }: ProductProps) {
+  const { isFallback } = useRouter();
+
+  if (isFallback) {
+    console.log('loding');
+    return <p>Loading...</p>;
+  }
+
   return (
     <ProductContainer>
       <ImageContainer>
@@ -39,13 +47,15 @@ export default function Product({ product }: ProductProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  // Buscar os produtos mais vendidos / mais acessados (cenário ideal)
+
   return {
     paths: [
       {
         params: { id: 'prod_OpchTw8O0EVqLI' },
       },
     ],
-    fallback: false,
+    fallback: true,
   };
 };
 
