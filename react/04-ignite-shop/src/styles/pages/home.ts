@@ -1,4 +1,4 @@
-import { styled } from '..';
+import { gradient, styled } from '..';
 
 export const HomeContainer = styled('main', {
   display: 'flex',
@@ -9,7 +9,7 @@ export const HomeContainer = styled('main', {
 });
 
 export const Product = styled('div', {
-  background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
+  background: gradient,
   borderRadius: 8,
   cursor: 'pointer',
   position: 'relative',

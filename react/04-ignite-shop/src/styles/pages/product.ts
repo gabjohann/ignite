@@ -1,4 +1,4 @@
-import { styled } from '..';
+import { gradient, styled } from '..';
 
 export const ProductContainer = styled('main', {
   display: 'grid',
@@ -14,7 +14,7 @@ export const ImageContainer = styled('div', {
   width: '100%',
   maxWidth: 576,
   height: 'calc(656px - 0.5rem)',
-  background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
+  background: gradient,
   borderRadius: 8,
   padding: '0.25rem',
 
