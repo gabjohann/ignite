@@ -7,26 +7,39 @@ import { useKeenSlider } from 'keen-slider/react';
 
 import Stripe from 'stripe';
 import { stripe } from '../lib/stripe';
-import { HomeContainer, Product } from '../styles/pages/home';
+import { HomeContainer, Product, ProductInfo } from '../styles/pages/home';
+import { Product as ProductModel } from 'use-shopping-cart/core';
 
 import 'keen-slider/keen-slider.min.css';
+import { Handbag } from '@phosphor-icons/react';
+import { useShoppingCart } from 'use-shopping-cart';
+import { useContext } from 'react';
+import { CartContext } from '../contexts/CartContext';
 
 interface HomeProps {
-  products: {
-    id: string;
-    name: string;
-    imageUrl: string;
-    price: string;
-  }[];
+  products: ProductModel[];
 }
 
 export default function Home({ products }: HomeProps) {
+  const { addItem } = useShoppingCart();
+  const { openShoppingCart } = useContext(CartContext);
+
   const [sliderRef] = useKeenSlider({
     slides: {
       perView: 3,
       spacing: 48,
     },
   });
+
+  function handleAddProductTShoppingCart(
+    event: React.MouseEvent<HTMLButtonElement>,
+    product: ProductModel
+  ) {
+    event.preventDefault();
+    addItem(product);
+
+    openShoppingCart();
+  }
 
   return (
     <>
@@ -48,8 +61,18 @@ export default function Home({ products }: HomeProps) {
                 />
 
                 <footer>
-                  <strong>{product.name}</strong>
-                  <span>{product.price}</span>
+                  <ProductInfo>
+                    <strong>{product.name}</strong>
+                    <span>{product.price}</span>
+                  </ProductInfo>
+
+                  <button
+                    onClick={(event) =>
+                      handleAddProductTShoppingCart(event, product)
+                    }
+                  >
+                    <Handbag color='#fff' width={24} height={24} />
+                  </button>
                 </footer>
               </Product>
             </Link>

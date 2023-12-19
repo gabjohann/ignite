@@ -1,38 +1,31 @@
 import { AppProps } from 'next/app';
+import { CartProvider } from 'use-shopping-cart';
+import { CartStateProvider } from '../contexts/CartContext';
 import { globalStyles } from '../styles/global';
-import Image from 'next/image';
-
-import { Handbag } from '@phosphor-icons/react';
-
-import logoImg from '../assets/logo.svg';
-import { Container, Header, ProductCounter } from '../styles/pages/app';
-import { useState } from 'react';
+import { Container } from '../styles/pages/app';
+import { Header } from '../components/Header';
 
 globalStyles();
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [showCounter, setShowCounter] = useState(false);
-
-  const toggleProductCounter = () => {
-    setShowCounter(!showCounter); // implementar o contador propriamente dito
-  };
-
   return (
-    <Container>
-      <Header>
-        <Image src={logoImg} alt='' />
-
-        <button onClick={toggleProductCounter}>
-          <Handbag color='#8D8D99' width={24} height={24} />
-
-          {showCounter && (
-            <ProductCounter>
-              <span>1</span>
-            </ProductCounter>
-          )}
-        </button>
-      </Header>
-      <Component {...pageProps} />
-    </Container>
+    <CartStateProvider>
+      <CartProvider
+        mode='payment'
+        cartMode='client-only'
+        stripe={String(process.env.STRIPE_PUBLIC_KEY)}
+        successUrl={`${process.env.NEXT_URL}/success?session_id={CHECKOUT_SESSION_ID}`}
+        cancelUrl={String(process.env.NEXT_URL)}
+        currency='BRL'
+        allowedCountries={['BR']}
+        billingAddressCollection={true}
+        shouldPersist
+      >
+        <Container>
+          <Header />
+          <Component {...pageProps} />
+        </Container>
+      </CartProvider>
+    </CartStateProvider>
   );
 }

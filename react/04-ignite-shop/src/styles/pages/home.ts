@@ -28,7 +28,7 @@ export const Product = styled('div', {
     bottom: '0.25rem',
     left: '0.25rem',
     right: '0.25rem',
-    padding: '2rem',
+    padding: '1.25rem',
 
     borderRadius: 6,
 
@@ -60,4 +60,20 @@ export const Product = styled('div', {
       opacity: 1,
     },
   },
+
+  button: {
+    display: 'flex',
+    padding: '0.75rem',
+
+    border: 0,
+    borderRadius: 6,
+    backgroundColor: '$green500',
+    cursor: 'pointer',
+  },
+});
+
+export const ProductInfo = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.5rem',
 });
